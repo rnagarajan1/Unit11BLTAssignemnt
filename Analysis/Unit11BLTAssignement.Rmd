@@ -1,0 +1,52 @@
+---
+title: "Unit 11 BLT Assignment"
+author: "Rangaswamy Nagarajan"
+date: "July 18, 2017"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Analysis
+
+```{r}
+
+
+library(tseries)
+SandP500 <- get.hist.quote('^gspc',quote = "Close")
+## Log returns
+SandPlog <- log(lag(SandP500))-log(SandP500)
+head(SandPlog)
+tail(SandPlog)
+## Volatility measure
+SandPvol <- sd(SandPlog)* sqrt(250)*100
+SandPvol
+
+## Volatility over entire length of series for various three different decay factors.
+Volatility <- function(d,logrets){
+  var = 0
+  lam = 0
+  varlist <- c()
+  for (r in logrets){
+    lam = lam *(1-1/d)+1
+    var = (1-1/lam)*var +(1/lam)*r^2
+    varlist <- c(varlist,var)
+  }
+  sqrt(varlist)
+}
+Volatility1 <- Volatility(10,SandPlog)
+Volatility2 <- Volatility(30,SandPlog)
+Volatility3 <- Volatility(100,SandPlog)
+
+```
+
+## Plot with volatility curves
+```{r}
+plot(Volatility1,type = "l")
+lines(Volatility2,type = "l",col="red")
+lines(Volatility3,type = "l",col="blue")
+```
