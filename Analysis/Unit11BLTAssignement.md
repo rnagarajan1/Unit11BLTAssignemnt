@@ -106,7 +106,7 @@ Volatility3 <- Volatility(100,SandPlog)
 ```r
 plot(Volatility1,type = "l")
 lines(Volatility2,type = "l",col="red")
-lines(Volatility3,type = "l",col="blue")
+lines(Volatility3,type = "l",col="green")
 ```
 
 ![](Unit11BLTAssignement_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
